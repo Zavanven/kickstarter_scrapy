@@ -35,6 +35,10 @@ class TabletopGamesSpider(scrapy.Spider):
             for project in projects:
                 yield {
                     'project_name': project.xpath('.//h3/text()').get(),
+                    'project_url': project.xpath('.//a[contains(@href, "projects")]/@href').get(),
+                    'description': project.xpath('.//a[contains(@href, "projects")]/p/text()').get(),
+                    'profile_name': project.xpath('//a[contains(@href, "profile")]/text()').get(),
+                    'profile_url': project.xpath('//a[contains(@href, "profile")]/@href').get(),
                     
                 }
 
