@@ -6,8 +6,18 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
+import sqlite3
 
 
 class KickstarterPipeline:
+    def open_spider(self, spider):
+        self.connection = sqlite3.connect('kickstarter.db')
+        self.cursor = self.connection.cursor
+        self.cursor.execute('''
+            CREATE TABLE projects(
+                
+            )
+        ''')
+
     def process_item(self, item, spider):
         return item

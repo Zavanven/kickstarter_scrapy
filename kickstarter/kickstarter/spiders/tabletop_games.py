@@ -32,14 +32,17 @@ class TabletopGamesSpider(scrapy.Spider):
             )
         else:
             projects = response.selector.xpath("//div[@id='projects_list']/div/div/div/div/div")
+            category = response.selector.xpath('.//span[@id="category_filter"]/span[@class="js-title"]/text()').get()
             for project in projects:
+                profile_name = project.xpath('.//div[3]/div[1]/div[2]/div/a/text()').get()
+                profile_url = project.xpath('.//div[3]/div[1]/div[2]/div/a/@href').get()
                 yield {
                     'project_name': project.xpath('.//h3/text()').get(),
                     'project_url': project.xpath('.//a[contains(@href, "projects")]/@href').get(),
                     'description': project.xpath('.//a[contains(@href, "projects")]/p/text()').get(),
-                    'profile_name': project.xpath('//a[contains(@href, "profile")]/text()').get(),
-                    'profile_url': project.xpath('//a[contains(@href, "profile")]/@href').get(),
-                    
+                    'profile_name': profile_name if profile_name else project.xpath('.//div[3]/div[2]/div/div/div/div/div/span[2]/text()').get(),
+                    'profile_url': profile_url if profile_url else project.xpath('.//div[3]/div[2]/div/div/div/a/@href').get(),
+                    'category': category,
                 }
 
             self.page += 1
