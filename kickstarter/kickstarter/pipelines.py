@@ -49,6 +49,7 @@ class KickstarterPipeline:
             item.get('profile_url'),
             item.get('category'),
         ))
+        self.connection.commit()
         return item
 
     def close_spider(self, spider):
