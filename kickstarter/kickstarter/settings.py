@@ -64,9 +64,9 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-   'kickstarter.pipelines.KickstarterPipeline': 810,
-}
+# ITEM_PIPELINES = {
+#    'kickstarter.pipelines.KickstarterPipeline': 810,
+# }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html

@@ -9,6 +9,12 @@ class TabletopGamesSpider(scrapy.Spider):
     allowed_domains = ['www.kickstarter.com']
     random_seed = randint(2710000, 2714299)
     page = 1
+
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            'kickstarter.pipelines.KickstarterPipeline': 810,
+        }
+    }
     
     def start_requests(self):
         yield SeleniumRequest(
