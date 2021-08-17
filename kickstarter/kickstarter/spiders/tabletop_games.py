@@ -13,11 +13,11 @@ class TabletopGamesSpider(scrapy.Spider):
     random_seed = randint(2710000, 2714299)
     page = 1
 
-    # custom_settings = {
-    #     'ITEM_PIPELINES': {
-    #         'kickstarter.pipelines.KickstarterPipeline': 810,
-    #     }
-    # }
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            'kickstarter.pipelines.KickstarterPipeline': 810,
+        }
+    }
     
     def start_requests(self):
         try:
@@ -41,7 +41,7 @@ class TabletopGamesSpider(scrapy.Spider):
     def parse(self, response):
         if response.selector.xpath("//h1[contains(text(), 'Backer or bot?')]"):
             # Run this if bot is blocked. Change to new proxy and try again.
-            logging.WARNING('Bot has been blocked. Trying again with new proxy.')
+            logging.warning('Bot has been blocked. Trying again with new proxy.')
             yield SeleniumRequest(
                 url=f'https://www.kickstarter.com/discover/advanced?category_id=34&woe_id={self.countries[self.countries_index]["woeid"]}&sort=newest&seed={self.random_seed}&page={self.page}',
                 callback=self.parse,
@@ -53,7 +53,7 @@ class TabletopGamesSpider(scrapy.Spider):
         elif response.selector.xpath('//section[@id="advanced_container" and contains(@class, "no_results")]') or\
         response.selector.xpath("//h1[contains(text(), 'Back it up!')]"):
             # When there are no results on page or bot hit 201 page change to next country.
-            logging.WARNING('No more results. Changing country.')
+            logging.warning('No more results. Changing country.')
             self.page = 1
             self.countries_index += 1
             yield SeleniumRequest(
