@@ -96,6 +96,9 @@ class CustomSeleniumMiddleware(SeleniumMiddleware):
     
     def is_good_proxy(self, string: str, proxy_list: list):
         '''Return working proxy'''
+        if not self.proxies:
+            # Renew list 
+            self.proxies = self.get_http_proxies()
         try:
             logging.warning(f'Checking PROXY: {string}')
             address = string.split(':')
