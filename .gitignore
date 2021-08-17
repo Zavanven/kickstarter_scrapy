@@ -145,3 +145,4 @@ cython_debug/
 
 kickstarter.db
 kickstarter.db-journal
+Ignore/
