@@ -72,6 +72,9 @@ class TabletopGamesSpider(scrapy.Spider):
                 project_url = str(project_url).replace('?ref=discovery_category_newest', '')
                 profile_name = project.xpath('.//div[3]/div[1]/div[2]/div/a/text()').get()
                 profile_url = str(project.xpath('.//div[3]/div[1]/div[2]/div/a/@href').get()).replace('?ref=discovery_category_newest', '')
+                if profile_url == 'None':
+                    profile_url = str(project.xpath('.//div[3]/div[2]/div/div/div/a/@href').get())
+
                 yield {
                     'project_name': project.xpath('.//h3/text()').get(),
                     'project_state': project.xpath('.//@data-project_state').get(),
@@ -81,7 +84,7 @@ class TabletopGamesSpider(scrapy.Spider):
                     'project_url': project_url,
                     'description': project.xpath('.//@data-project_description').get(),
                     'profile_name': profile_name if profile_name else project.xpath('.//div[3]/div[2]/div/div/div/div/div/span[2]/text()').get(),
-                    'profile_url': profile_url if profile_url else str(project.xpath('.//div[3]/div[2]/div/div/div/a/@href').get()).replace('?ref=discovery_category_newest', ''),
+                    'profile_url': profile_url,
                     'category': category,
                     'country': self.countries[self.countries_index]['country']
                 }
