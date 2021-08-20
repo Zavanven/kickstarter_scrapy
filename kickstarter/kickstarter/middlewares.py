@@ -21,7 +21,7 @@ class CustomSeleniumMiddleware(SeleniumMiddleware):
     
     def get_http_proxies(self) -> list:
         '''Get list of http proxies from proxyscrape.com'''
-        link = 'https://api.proxyscrape.com/v2/?request=getproxies&protocol=http&timeout=4000&country=all&ssl=all&anonymity=all'
+        link = 'https://api.proxyscrape.com/v2/?request=getproxies&protocol=http&timeout=3000&country=all&ssl=all&anonymity=all'
         with urllib.request.urlopen(link) as f:
             text = f.read().decode('utf-8')
             return str(text).strip().replace('\r', '').split('\n')
